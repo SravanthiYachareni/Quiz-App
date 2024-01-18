@@ -7,6 +7,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -21,13 +22,15 @@ public class QuestionService {
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
+//        return new ResponseEntity<>(new ArrayList<>(), HttpStatus.BAD_REQUEST);
+
     }
-        public List<Question> getAllByCategory (String category){
-            return questionRepo.findByCategory(category);
+        public ResponseEntity<List<Question>> getAllByCategory (String category){
+            return  new ResponseEntity<>(questionRepo.findByCategory(category),HttpStatus.OK);
         }
-        public String addQuestion (Question question){
+        public ResponseEntity<String> addQuestion (Question question){
             questionRepo.save(question);
-            return "success";
+            return new ResponseEntity<> ("success",HttpStatus.CREATED);
         }
     }
 
